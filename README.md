@@ -2,7 +2,7 @@
 
 中文 | [English](README.en.md)
 
-面向不懂编程的同学的 Qoder CLI skill：vibe coding 时替你**独立评审** AI 写的代码和提的方案，用大白话给结论。
+一个遵循开放 **Agent Skills** 格式（`SKILL.md`）的技能，适用于支持该格式的主流 AI 编程助手（Claude Code、Qoder CLI、GitHub Copilot agent 模式等），**不绑定单一产品**。面向不懂编程的同学：vibe coding 时替你**独立评审** AI 写的代码和提的方案，用大白话给结论。
 
 ## 它解决什么
 
@@ -14,19 +14,28 @@
 
 ## 安装
 
-需要 Qoder CLI。把 `vibe-check` 文件夹复制到用户级 skills 目录：
+把 `vibe-check` 文件夹放进你所用产品的 skills 目录即可。常见位置：
+
+| 产品 | 项目级（仅当前项目） | 用户级（所有项目） |
+|---|---|---|
+| Claude Code | `.claude/skills/` | `~/.claude/skills/` |
+| Qoder CLI | `.qoder/skills/` | `~/.qoder-cn/skills/`（国际版 `~/.qoder/skills/`） |
+| GitHub Copilot（agent 模式） | `.github/skills/` 或 `.claude/skills/` | `~/.copilot/skills/` |
+| 其他支持 Agent Skills 的产品 | 各自的 skills 目录 | 同左 |
+
+以用户级安装为例（按你的产品替换目标目录）：
 
 ```bash
 git clone https://github.com/buguoshixc/vibe-check.git
-mkdir -p ~/.qoder-cn/skills
-cp -r vibe-check/vibe-check ~/.qoder-cn/skills/
+mkdir -p ~/.claude/skills          # Claude Code；Qoder 用 ~/.qoder-cn/skills
+cp -r vibe-check/vibe-check ~/.claude/skills/
 ```
 
-然后在 Qoder 里执行 `/skills reload`（或重启会话），用 `/skills list` 确认出现 `vibe-check`。
+装好后重启会话（Qoder 可执行 `/skills reload`），用产品的技能列表确认出现 `vibe-check`。
 
 ## 用法
 
-- 手动：输入 `/vibe-check`。可留空（自动评最近的代码／方案），也可指定对象。
+- 手动：输入 `/vibe-check`（多数产品支持斜杠调用技能，也可在对话里直接点名让它评审）。可留空自动评最近的代码／方案，或指定对象。
 - 自动：对 AI 产出表达疑虑时触发，比如"这样行吗""靠谱吗""帮我看看""该选哪个""会不会翻车"。
 
 ## 示例
@@ -43,3 +52,7 @@ vibe-check/
     ├── review-checklist.md     # 7 项评审清单
     └── plain-language.md       # 术语比方对照＋五维度定义
 ```
+
+## 兼容性说明
+
+本技能只依赖通用能力：读文件、用 shell 运行代码、（可选）派独立子代理。没有子代理能力的产品会自动降级为自审，并在报告里注明"未派独立评审"。
