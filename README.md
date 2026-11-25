@@ -1,5 +1,7 @@
 # vibe-check
 
+中文 | [English](README.en.md)
+
 面向不懂编程的同学的 Qoder CLI skill：vibe coding 时替你**独立评审** AI 写的代码和提的方案，用大白话给结论。
 
 ## 它解决什么
